@@ -26,13 +26,13 @@ interface ScoreRingProps extends ScoreRingVariants {
   className?: string;
 }
 
-export function ScoreRing({
+export const ScoreRing = ({
   score,
   maxScore = 100,
   size,
   label,
   className,
-}: ScoreRingProps) {
+}: ScoreRingProps) => {
   const percentage = Math.min(Math.max((score / maxScore) * 100, 0), 100);
 
   const data = [
@@ -67,7 +67,7 @@ export function ScoreRing({
       </div>
     </div>
   );
-}
+};
 
 function getScoreColor(percentage: number): string {
   if (percentage >= 80) return "rgb(34 197 94)";

@@ -30,8 +30,8 @@ type BadgeProps = ComponentProps<"span"> &
     className?: string;
   };
 
-export function Badge({ className, variant, size, ...props }: BadgeProps) {
+export const Badge = ({ className, variant, size, ...props }: BadgeProps) => {
   return (
     <span className={badgeVariants({ variant, size, className })} {...props} />
   );
-}
+};

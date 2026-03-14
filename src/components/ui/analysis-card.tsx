@@ -27,7 +27,7 @@ interface AnalysisCardProps extends AnalysisCardVariants {
   children?: React.ReactNode;
 }
 
-export function AnalysisCard({
+export const AnalysisCard = ({
   title,
   score,
   maxScore = 100,
@@ -36,7 +36,7 @@ export function AnalysisCard({
   variant,
   className,
   children,
-}: AnalysisCardProps) {
+}: AnalysisCardProps) => {
   return (
     <div className={analysisCardVariants({ variant, className })}>
       <div className="flex items-start gap-4">
@@ -51,4 +51,4 @@ export function AnalysisCard({
       </div>
     </div>
   );
-}
+};

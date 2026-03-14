@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const switchVariants = tv({
-  base: "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[checked]:bg-gray-900 data-[unchecked]:bg-gray-200",
+  base: "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[checked]:bg-green-600 data-[unchecked]:bg-gray-200",
   variants: {
     size: {
       sm: "h-5 w-9",
@@ -18,7 +18,7 @@ const switchVariants = tv({
 });
 
 const switchThumbVariants = tv({
-  base: "pointer-events-none inline-block rounded-full bg-white shadow-lg ring-0 transition-transform data-[checked]:translate-x-full data-[unchecked]:translate-x-0",
+  base: "pointer-events-none inline-block rounded-full bg-black shadow-lg ring-0 transition-transform data-[checked]:translate-x-full data-[unchecked]:translate-x-0",
   variants: {
     size: {
       sm: "h-4 w-4",

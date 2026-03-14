@@ -83,6 +83,30 @@
 />
 ```
 
+### CodeEditor
+- **File:** `code-editor.tsx`
+- **Pattern:** Client Component (interactive)
+- **Props:** `value?`, `defaultValue?`, `onChange?`, `language?`, `filename?`, `size?`, `showLineNumbers?`
+- **Sizes:** `sm`, `md`, `lg`
+- **Features:** Line numbers, tab support, synced scroll
+
+```tsx
+// Controlled
+<CodeEditor
+  value={code}
+  onChange={setCode}
+  language="typescript"
+  filename="example.tsx"
+/>
+
+// Uncontrolled
+<CodeEditor
+  defaultValue="const x = 10;"
+  language="javascript"
+  size="lg"
+/>
+```
+
 ## Component Creation Patterns
 
 ### Pattern 1: Simple Component
@@ -193,7 +217,8 @@ export async function CodeBlock({ code, language }: CodeBlockProps) {
 4. **Variants** - Use `tv()` from `tailwind-variants` v3.x (not `cva`)
 5. **Props spreading** - Always spread remaining props (`...props`)
 6. **forwardRef** - Use for DOM components that need ref access
-7. **Server Components** - Use `async function` for components with async operations
+7. **Client Components** - Use `"use client"` directive for interactive components (CodeEditor)
+8. **Server Components** - Use `async function` for components with async operations (CodeBlock)
 
 ## When to Use Each Pattern
 
@@ -203,6 +228,7 @@ export async function CodeBlock({ code, language }: CodeBlockProps) {
 | Compound | Multi-part, independent styling | Card, Dialog |
 | Radix Primitive | Accessible, complex interactions | Toggle, ToggleGroup |
 | Server Component | Async operations, heavy computation | CodeBlock |
+| Client Component | Interactive, event handlers | CodeEditor |
 
 ## Common Variants Reference
 
