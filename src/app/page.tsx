@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { CodeEditor } from "@/components/ui/code-editor";
+import { Switch } from "@/components/ui/switch";
 import {
   Table,
   TableBody,
@@ -31,10 +31,7 @@ export default function Home() {
             }
           </p>
           <div className="mt-5 mb-5">
-            <CodeEditor
-              defaultValue={`// paste your code here ...`}
-              language="typescript"
-            />
+            <CodeEditor defaultValue={`// paste your code here ...`} />
           </div>
           <div className="flex justify-between">
             <div className="flex gap-3">

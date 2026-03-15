@@ -86,17 +86,25 @@
 ### CodeEditor
 - **File:** `code-editor.tsx`
 - **Pattern:** Client Component (interactive)
-- **Props:** `value?`, `defaultValue?`, `onChange?`, `language?`, `filename?`, `size?`, `showLineNumbers?`
+- **Props:** `value?`, `defaultValue?`, `onChange?`, `language?`, `onLanguageChange?`, `filename?`, `size?`, `showLineNumbers?`, `autoDetect?`
 - **Sizes:** `sm`, `md`, `lg`
-- **Features:** Line numbers, tab support, synced scroll
+- **Features:** 
+  - Line numbers, tab support, synced scroll
+  - Real-time syntax highlighting (client-side Shiki)
+  - Auto-detection on paste and blur
+  - Language selector dropdown (Top 20 languages)
+  - Debounced highlighting (~300ms)
 
 ```tsx
-// Controlled
+// Controlled with auto-detection
 <CodeEditor
   value={code}
   onChange={setCode}
-  language="typescript"
+  language={detectedLanguage}
+  onLanguageChange={setDetectedLanguage}
   filename="example.tsx"
+  autoDetect={true}
+  size="lg"
 />
 
 // Uncontrolled
@@ -106,6 +114,31 @@
   size="lg"
 />
 ```
+
+### LanguageSelector
+- **File:** `language-selector.tsx`
+- **Pattern:** Client Component
+- **Props:** `value?`, `onChange?`, `size?`, `showLabel?`
+- **Sizes:** `sm`, `md`, `lg`
+- **Languages:** Top 20 (TypeScript, JavaScript, Python, Go, Rust, Java, C++, HTML, CSS, JSON, SQL, Ruby, PHP, Swift, Kotlin, Markdown, YAML, Shell, Dockerfile, C#)
+
+```tsx
+<LanguageSelector
+  value={language}
+  onChange={setLanguage}
+  size="sm"
+  showLabel={true}
+/>
+```
+
+### Language Detector
+- **File:** `language-detector.ts`
+- **Pattern:** Utility functions (no component)
+- **Functions:**
+  - `detectLanguage(code: string): LanguageId` - Detects language from code
+  - `getLanguageName(id: LanguageId): string` - Gets display name
+  - `SUPPORTED_LANGUAGES` - Array of supported languages
+- **Detection method:** Pattern-based heuristics (keywords, syntax patterns)
 
 ## Component Creation Patterns
 
