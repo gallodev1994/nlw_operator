@@ -1,12 +1,15 @@
-import { createCaller } from "@/lib/trpc";
+import { CodeBlock } from "@/components/ui/code-block";
+import { createCaller, createTRPCContext } from "@/lib/trpc";
 
 async function getShameLeaderboard() {
-  const caller = await createCaller();
+  const ctx = await createTRPCContext();
+  const caller = await createCaller(ctx);
   return caller.leaderboard.getWorst({ limit: 3 });
 }
 
 async function getStats() {
-  const caller = await createCaller();
+  const ctx = await createTRPCContext();
+  const caller = await createCaller(ctx);
   return caller.leaderboard.getStats();
 }
 
@@ -34,9 +37,12 @@ export async function ShameLeaderboard() {
             </span>
             <span className="text-red-400 text-sm font-bold">{item.score}</span>
           </div>
-          <pre className="text-gray-400 text-xs font-mono truncate">
-            {item.code.split("\n")[0]}
-          </pre>
+          <CodeBlock
+            code={item.code}
+            language={item.language}
+            showLineNumbers
+            className="text-xs"
+          />
           <div className="flex items-center justify-between mt-2">
             <span className="text-gray-500 text-xs">{item.language}</span>
             <span className="text-gray-600 text-xs truncate max-w-[150px]">

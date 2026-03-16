@@ -58,14 +58,18 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="mt-10 flex flex-col mx-auto w-[50%]">
+      <section className="mt-10 flex flex-col mx-auto w-[50%] pb-20">
         <div className="flex justify-between flex-1 mb-2">
           <div className="mt-2">
             <span className="text-green-600 mr-3 text-lg">{"//"}</span>
             <span className="text-lg text-gray-500">shame_leaderboard</span>
           </div>
           <Link href={"/leaderboard"}>
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              className="hover:text-black cursor-pointer"
+            >
               {"$ view_all >>"}
             </Button>
           </Link>
@@ -77,10 +81,6 @@ export default function Home() {
 
         <Suspense fallback={<ShameLeaderboardSkeleton />}>
           <ShameLeaderboard />
-        </Suspense>
-
-        <Suspense fallback={<ShameLeaderboardStatsSkeleton />}>
-          <ShameLeaderboardStats />
         </Suspense>
       </section>
     </>

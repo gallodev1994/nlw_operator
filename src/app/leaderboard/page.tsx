@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/ui/code-block";
-import { createCaller } from "@/lib/trpc";
-import { createTRPCContext } from "@/server/trpc";
+import { createCaller, createTRPCContext } from "@/lib/trpc";
 
 export default async function LeaderboardPage() {
   const ctx = await createTRPCContext();
-  const caller = createCaller(ctx);
+  const caller = await createCaller(ctx);
 
   const leaderboardData = await caller.leaderboard.getTop({
     type: "worst",

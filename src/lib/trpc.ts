@@ -1,16 +1,12 @@
-import type { appRouter } from "@/server/routers/_app";
-import {
-  type Context,
-  createCallerFactory,
-  createTRPCContext,
-} from "@/server/trpc";
+import { createCallerFactory, createTRPCContext } from "@/server/trpc";
 
-type AppRouterType = typeof appRouter;
+export const createCaller = async (
+  ctx: Awaited<ReturnType<typeof createTRPCContext>>,
+) => {
+  const { appRouter } = await import("@/server/routers/_app");
+  const callerFn = createCallerFactory(appRouter);
+  return callerFn(ctx);
+};
 
-export async function createCaller() {
-  const ctx = await createTRPCContext();
-  const caller = createCallerFactory<AppRouterType>();
-  return caller(ctx);
-}
-
+export { createTRPCContext };
 export type { AppRouter } from "@/server/routers/_app";

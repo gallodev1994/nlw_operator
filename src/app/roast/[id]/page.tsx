@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { AnalysisCard } from "@/components/ui/analysis-card";
 import { Button } from "@/components/ui/button";
-import { SuggestedFix } from "@/components/ui/diff-block";
-import { createCaller } from "@/lib/trpc";
-import { createTRPCContext } from "@/server/trpc";
+import { createCaller, createTRPCContext } from "@/lib/trpc";
 
 export default async function ResultPage({
   params,
@@ -12,7 +10,8 @@ export default async function ResultPage({
 }) {
   const { id } = await params;
 
-  const caller = createCaller();
+  const ctx = await createTRPCContext();
+  const caller = await createCaller(ctx);
 
   const roast = await caller.roast.getById({ id: parseInt(id) });
 
