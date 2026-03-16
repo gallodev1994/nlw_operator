@@ -1,16 +1,6 @@
-"use client";
-
 import { AnalysisCard } from "@/components/ui/analysis-card";
 
-export default function ResultPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  return <ResultPageContent params={params} />;
-}
-
-async function ResultPageContent({
+export default async function ResultPage({
   params,
 }: {
   params: Promise<{ id: string }>;
