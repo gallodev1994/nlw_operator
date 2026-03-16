@@ -1,4 +1,4 @@
-import type { BundledLanguage } from "shiki";
+//import type { BundledLanguage } from "shiki";
 import { codeToHtml } from "shiki";
 import { tv } from "tailwind-variants";
 
@@ -8,7 +8,7 @@ const codeBlockVariants = tv({
 
 interface CodeBlockProps {
   code: string;
-  language?: BundledLanguage;
+  language?: string;
   showLineNumbers?: boolean;
   filename?: string;
   className?: string;

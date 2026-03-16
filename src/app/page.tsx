@@ -1,7 +1,8 @@
+import Link from "next/link";
+import { StatsWithAnimation } from "@/components/stats-client";
 import { Button } from "@/components/ui/button";
 import { CodeEditor } from "@/components/ui/code-editor";
 import { Switch } from "@/components/ui/switch";
-import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -52,11 +53,7 @@ export default function Home() {
             </Button>
           </div>
           <div className="mt-10 flex justify-center">
-            <div className="flex gap-15">
-              <span className="text-gray-500">2.847 codes roasted</span>
-              <span className="text-gray-500">.</span>
-              <span className="text-gray-500"> avg score: 4.2/10</span>
-            </div>
+            <StatsWithAnimation />
           </div>
         </div>
       </section>

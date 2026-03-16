@@ -1,4 +1,9 @@
+import Link from "next/link";
 import { AnalysisCard } from "@/components/ui/analysis-card";
+import { Button } from "@/components/ui/button";
+import { SuggestedFix } from "@/components/ui/diff-block";
+import { createCaller } from "@/lib/trpc";
+import { createTRPCContext } from "@/server/trpc";
 
 export default async function ResultPage({
   params,
@@ -7,9 +12,27 @@ export default async function ResultPage({
 }) {
   const { id } = await params;
 
-  const score = 85;
-  const language = "TypeScript";
-  const lineCount = 4;
+  const ctx = await createTRPCContext();
+  const caller = createCaller(ctx);
+
+  const roast = await caller.roast.getById({ id: parseInt(id) });
+
+  if (!roast) {
+    return (
+      <main className="min-h-screen bg-gray-900 p-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold text-white">
+            Roast não encontrado
+          </h1>
+          <Link href="/">
+            <Button variant="outline" size="sm" className="mt-4">
+              Voltar
+            </Button>
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   const analysisItems = [
     {
@@ -35,42 +58,41 @@ export default async function ResultPage({
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-white">
-            <span className="text-green-600 mr-2">{">"}</span>Resultado
+            <span className="text-green-600 mr-2">{"//"}</span>Resultado
           </h1>
         </div>
 
         <div className="mb-8">
           <AnalysisCard
             title="Score Total"
-            score={score}
+            score={roast.score}
             variant="ghost"
             label="Pontos"
             description="Avaliação geral do código"
-            language={language}
-            lineCount={lineCount}
+            language={roast.language}
+            lineCount={roast.lineCount}
           />
         </div>
 
-        <h2>
-          <span className="text-gray-400 text-xl">
-            <span className="text-green-600 mr-2">{">"}</span>your_submision
-          </span>
+        <h2 className="text-white text-2xl mb-4">
+          <span className="text-green-600 mr-2">{"//"}</span>your_submision
         </h2>
         <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-8">
           <div className="flex gap-4 mb-6">
             <div>
               <span className="text-gray-400 text-sm">Roast ID</span>
-              <p className="text-white font-mono">{id}</p>
+              <p className="text-white font-mono">{roast.id}</p>
+            </div>
+            <div>
+              <span className="text-gray-400 text-sm">Verdict</span>
+              <p className="text-white font-mono">{roast.verdict}</p>
             </div>
           </div>
 
           <div className="mb-6">
             <div className="mt-2 bg-gray-900 rounded-lg p-4">
               <pre className="text-gray-300 text-sm overflow-x-auto">
-                {`function badCode() {
-  var x = 1;
-  return x + 2;
-}`}
+                {roast.code}
               </pre>
             </div>
           </div>
@@ -78,7 +100,7 @@ export default async function ResultPage({
 
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-white mb-4">
-            <span className="text-green-600 mr-2">{">"}</span>detailed_analysis
+            <span className="text-green-600 mr-2">{"//"}</span>detailed_analysis
           </h2>
 
           <div className="grid grid-cols-2 gap-3">
@@ -118,6 +140,18 @@ export default async function ResultPage({
             ))}
           </div>
         </div>
+
+        {roast.suggestedFix && (
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-white mb-4">
+              <span className="text-green-600 mr-2">{"//"}</span>suggested_fix
+            </h2>
+
+            <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+              <pre className="text-green-400 text-sm">{roast.suggestedFix}</pre>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   );
