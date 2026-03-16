@@ -12,8 +12,7 @@ export default async function ResultPage({
 }) {
   const { id } = await params;
 
-  const ctx = await createTRPCContext();
-  const caller = createCaller(ctx);
+  const caller = createCaller();
 
   const roast = await caller.roast.getById({ id: parseInt(id) });
 
