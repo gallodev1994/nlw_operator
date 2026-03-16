@@ -107,4 +107,29 @@ export const leaderboardRouter = router({
       bestScore: bestScore[0]?.max ?? 0,
     };
   }),
+
+  getWorst: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(10).default(3),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const items = await ctx.db
+        .select({
+          id: roasts.id,
+          score: roasts.score,
+          code: roasts.code,
+          language: roasts.language,
+          verdict: roasts.verdict,
+          roastQuote: roasts.roastQuote,
+          createdAt: roasts.createdAt,
+        })
+        .from(roasts)
+        .where(eq(roasts.isPublic, true))
+        .orderBy(asc(roasts.score))
+        .limit(input.limit);
+
+      return items;
+    }),
 });

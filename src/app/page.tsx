@@ -1,16 +1,17 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import {
+  ShameLeaderboard,
+  ShameLeaderboardStats,
+} from "@/components/shame-leaderboard";
+import {
+  ShameLeaderboardSkeleton,
+  ShameLeaderboardStatsSkeleton,
+} from "@/components/shame-leaderboard-skeleton";
 import { StatsWithAnimation } from "@/components/stats-client";
 import { Button } from "@/components/ui/button";
 import { CodeEditor } from "@/components/ui/code-editor";
 import { Switch } from "@/components/ui/switch";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 export default function Home() {
   return (
@@ -58,47 +59,29 @@ export default function Home() {
         </div>
       </section>
       <section className="mt-10 flex flex-col mx-auto w-[50%]">
-        <div className="flex justify-between flex-1 mb-5">
+        <div className="flex justify-between flex-1 mb-2">
           <div className="mt-2">
             <span className="text-green-600 mr-3 text-lg">{"//"}</span>
-            <span className="text-lg text-gray-500">shane_leaderboard</span>
+            <span className="text-lg text-gray-500">shame_leaderboard</span>
           </div>
-          <Button variant="outline">{"$ view_all >>"}</Button>
+          <Link href={"/leaderboard"}>
+            <Button variant="outline" size="sm">
+              {"$ view_all >>"}
+            </Button>
+          </Link>
         </div>
 
-        <span className="text-gray-500">
+        <span className="text-gray-500 text-sm mb-4">
           {"// the worst code on the internet, ranked by shame"}
         </span>
-      </section>
-      <section className="mt-10 flex mx-auto w-[50%]">
-        <Table variant="bordered">
-          <TableHeader>
-            <TableHead>#</TableHead>
-            <TableHead>Score</TableHead>
-            <TableHead>Code</TableHead>
-            <TableHead>Lang</TableHead>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="text-yellow-500">1</TableCell>
-              <TableCell className="text-green-500">95</TableCell>
-              <TableCell>const x = 10;</TableCell>
-              <TableCell>javascript</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>2</TableCell>
-              <TableCell className="text-red-500">5</TableCell>
-              <TableCell>def hello():</TableCell>
-              <TableCell>python</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>3</TableCell>
-              <TableCell className="text-red-500">2</TableCell>
-              <TableCell>fn main() {}</TableCell>
-              <TableCell>rust</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+
+        <Suspense fallback={<ShameLeaderboardSkeleton />}>
+          <ShameLeaderboard />
+        </Suspense>
+
+        <Suspense fallback={<ShameLeaderboardStatsSkeleton />}>
+          <ShameLeaderboardStats />
+        </Suspense>
       </section>
     </>
   );
