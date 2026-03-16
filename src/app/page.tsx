@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { CodeEditor } from "@/components/ui/code-editor";
 import { Switch } from "@/components/ui/switch";
+import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -17,7 +18,9 @@ export default function Home() {
         <h1 className="text-4xl">
           <span className="text-green-600 mr-2">{">"}</span>devroast
         </h1>
-        <span className="mt-2 text-gray-500">leaderboard</span>
+        <Link href={"/leaderboard"}>
+          <span className="mt-2 text-gray-500">leaderboard</span>
+        </Link>
       </header>
       <section className="mt-20 flex items-center justify-center">
         <div className="mb-5">

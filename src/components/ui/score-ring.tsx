@@ -80,8 +80,7 @@ export const ScoreRing = ({
 };
 
 function getScoreColor(percentage: number): string {
-  if (percentage >= 80) return "rgb(34 197 94)";
-  if (percentage >= 60) return "rgb(59 130 246)";
-  if (percentage >= 40) return "rgb(234 179 8)";
+  if (percentage >= 70) return "rgb(34 197 94)";
+  if (percentage >= 50) return "rgb(234 179 8)";
   return "rgb(239 68 68)";
 }

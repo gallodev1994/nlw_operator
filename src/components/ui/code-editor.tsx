@@ -44,6 +44,7 @@ interface CodeEditorProps {
   cols?: number;
   minLines?: number;
   autoDetect?: boolean;
+  maxLength?: number;
 }
 
 export const CodeEditor = ({
@@ -58,6 +59,7 @@ export const CodeEditor = ({
   className,
   minLines = 18,
   autoDetect = true,
+  maxLength = 2000,
   ...props
 }: CodeEditorProps) => {
   const [internalValue, setInternalValue] = useState(defaultValue);
@@ -136,13 +138,16 @@ export const CodeEditor = ({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = e.target.value;
+      if (newValue.length > maxLength) {
+        return;
+      }
       if (!isControlled) {
         setInternalValue(newValue);
       }
       onChange?.(newValue);
       handleLanguageDetect(newValue);
     },
-    [isControlled, onChange, handleLanguageDetect],
+    [isControlled, onChange, handleLanguageDetect, maxLength],
   );
 
   const handlePaste = useCallback(
@@ -245,8 +250,12 @@ export const CodeEditor = ({
             className="min-h-0 w-full h-full bg-transparent text-transparent caret-white font-mono text-sm leading-6 p-4 resize-none focus:outline-none focus:ring-0 border-none overflow-auto whitespace-pre-wrap break-words"
             spellCheck={false}
             style={{ position: "relative", zIndex: 1 }}
+            maxLength={maxLength}
             {...props}
           />
+        </div>
+        <div className="absolute bottom-2 right-[28px] text-xs text-gray-500 font-mono bg-gray-800/80 px-2 py-0.5 rounded">
+          {currentValue.length}/{maxLength}
         </div>
       </div>
     </div>
